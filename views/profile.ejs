@@ -1,0 +1,107 @@
+<%- include('partials/header') -%>
+
+<h1 class="m-4 text-center">Current user's Profile</h1>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-12">
+      <div class="text-center">
+        <p><strong>User Name</strong>: <%= user.userName %></p>
+        <p><strong>Email</strong>: <%= user.email %></p>
+        <a href="/logout" class="col-3 btn btn-danger">Logout</a>
+      </div>
+      <div class="mt-5">
+        <h2>Add a bug</h2>
+        <form action="/bug/createBug" enctype="multipart/form-data" method="POST">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name">
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="imgUpload" class="form-label">Image</label>
+            <input type="file" class="form-control" id="imageUpload" name="file">
+          </div>
+          <div class="mb-3">
+            <label for="priority" class="form-label">Priority</label>
+            <textarea class="form-control" id="priority" name="priority"></textarea>
+          </div>
+          <div class="mb-3 text-center"><button type="submit" class="btn btn-primary" value="Upload">Submit</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Table -->
+  <div class="overflow-x-auto w-full" data-theme="light">
+    <table class="table w-full">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th>
+            <label>
+              <input type="checkbox" class="checkbox" />
+            </label>
+          </th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Priority</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- row 1 -->
+        <% for(var i=0; i<bugs.length; i++) {%>
+        <tr>
+          <th>
+            <label>
+              <input type="checkbox" class="checkbox" />
+            </label>
+          </th>
+          <td>
+            <div class="flex items-center space-x-3">
+              <div class="avatar">
+                <div class="mask mask-squircle w-12 h-12">
+                  <img src="<%= bugs[i].image%>" alt="Avatar Tailwind CSS Component" />
+                </div>
+              </div>
+              <div>
+                <div class="font-bold"><%= bugs[i].name%></div>
+                <div class="text-sm opacity-50">...</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <%= bugs[i].description%>
+            <br>
+            <span class="badge badge-ghost badge-sm">...</span>
+          </td>
+          <td><%= bugs[i].priority.toUpperCase()%></td>
+          <th>
+            <a class="btn btn-ghost btn-xs" href="/bug/<%= bugs[i]._id%>">details</a>
+          </th>
+        </tr>
+        <% } %>
+
+        <!-- foot -->
+      <tfoot>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Priority</th>
+          <th></th>
+        </tr>
+      </tfoot>
+
+    </table>
+  </div>
+  <!-- Return to Feed -->
+  <div class="row justify-content-center mt-5">
+    <a class="btn btn-primary" href="/feed">Return to Feed</a>
+  </div>
+</div>
+
+<%- include('partials/footer') -%>
